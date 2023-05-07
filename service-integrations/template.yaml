@@ -10,3 +10,8 @@ Resources:
     Type: AWS::Serverless::SimpleTable
     Properties:
       TableName: service-integration-table
+  
+  DemoQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: service-integration-queue
