@@ -30,14 +30,15 @@
       },
 
 
-
       "Publish to SNS": {
-        "Type": "Pass",
-        "Result": {
-            "data1": 0.5,
-            "data2": 1.5
+        "Type": "Task",
+        "Resource": "arn:aws:states:::sns:publish",
+        "Parameters": {
+          "TopicArn": "arn:aws:sns:eu-west-1:394070527653:service-integration-topic",
+          "Message": {
+            "Input": "Hello from Step Functions!"
+          }
         },
-        "ResultPath": "$.result",
         "End": true
       }
     }
