@@ -15,18 +15,22 @@
         },
         "ResultPath": "$.DynamoDB",
         "Next": "Send Message to SQS"
-
-
       },
+
+
       "Send Message to SQS": {
-        "Type": "Pass",
-        "Result": {
-            "data1": 0.5,
-            "data2": 1.5
+        "Type": "Task",
+        "Resource": "arn:aws:states:::sqs:sendMessage",
+        "Parameters": {
+          "QueueUrl": "https://sqs.eu-west-1.amazonaws.com/394070527653/service-integration-queue",
+          "MessageBody.$": "$.DynamoDB"
         },
-        "ResultPath": "$.result",
+        "ResultPath": "$.SQS",
         "Next": "Publish to SNS"
       },
+
+
+
       "Publish to SNS": {
         "Type": "Pass",
         "Result": {
