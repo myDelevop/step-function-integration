@@ -3,15 +3,22 @@
     "StartAt": "Write to DynamoDB",
     "States": {
       "Write to DynamoDB": {
-        "Type": "Pass",
-        "Result": {
-            "data1": 0.5,
-            "data2": 1.5
+        "Type": "Task",
+        "Resource": "arn:aws:states:::dynamodb:putItem",
+        "Parameters": {
+          "TableName": "service-integration-table",
+          "Item": {
+            "id": {"S.$": "$$.Execution.Id"},
+            "Name": {"S": "Rob"},
+            "Channel": {"S.$": "$.Channel"}
+          }
         },
-        "ResultPath": "$.result",
-        "Next": "Send to SQS"
+        "ResultPath": "$.DynamoDB",
+        "Next": "Send Message to SQS"
+
+
       },
-      "Send to SQS": {
+      "Send Message to SQS": {
         "Type": "Pass",
         "Result": {
             "data1": 0.5,
